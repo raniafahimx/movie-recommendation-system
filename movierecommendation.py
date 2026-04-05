@@ -922,44 +922,84 @@ def main():
             with st.spinner("Computing similarities (cached after first run)..."):
                 user_sim, umeans = compute_user_similarity(matrix)
                 item_sim2        = compute_item_similarity(matrix)
-                U2, s2, Vt2, m2 = compute_svd(matrix, 30)
+                U2, s2, Vt2, m2  = compute_svd(matrix, 30)
 
-            ucf_p, icf_p, svd_p = [], [], []
-            ucf_r, icf_r, svd_r = [], [], []
+            title_to_id = dict(zip(movies["title"], movies["movieId"]))
+
+            ucf_p2, icf_p2, svd_p2 = [], [], []
 
             for i, uid in enumerate(test_users):
                 progress.progress((i+1)/len(test_users),
                                    text=f"Evaluating user {uid} ({i+1}/{len(test_users)})...")
-                ur = ratings[ratings["userId"] == uid].sort_values("timestamp")
-                sp = int(len(ur) * 0.8)
-                tr = ur.iloc[sp:]
-                rel = tr[tr["rating"] >= eval_thresh]["movieId"].tolist()
-                if not rel: continue
+                ur  = ratings[ratings["userId"] == uid].sort_values("timestamp")
+                sp  = int(len(ur) * 0.8)
+                rel = ur.iloc[sp:][ur.iloc[sp:]["rating"] >= eval_thresh]["movieId"].tolist()
+                if not rel:
+                    continue
+
                 try:
-                    r1 = ucf_recommend(uid, matrix, user_sim, user_ids, movie_ids,
-                                       movies, n_neighbors, eval_k)
-                    ucf_p.append(precision_at_k(r1["movie_id"].tolist() if "movie_id" in r1 else
-                                                r1.reset_index()["index"].tolist(), rel, eval_k))
-                    ucf_r.append(recall_at_k(r1["movie_id"].tolist() if "movie_id" in r1 else
-                                             r1.reset_index()["index"].tolist(), rel, eval_k))
-                except: pass
+                    recs1 = ucf_recommend(uid, matrix, user_sim, user_ids,
+                                          movie_ids, movies, n_neighbors, eval_k)
+                    ids1  = [title_to_id[t] for t in recs1["Title"].tolist() if t in title_to_id]
+                    ucf_p2.append(precision_at_k(ids1, rel, eval_k))
+                except:
+                    pass
+
                 try:
-                    r2 = icf_recommend(uid, matrix, item_sim2, movie_ids, movies, eval_k)
-                    ids2 = [movies[movies["title"] == t]["movieId"].values[0]
-                        for t in r2["Title"].tolist()
-                        if len(movies[movies["title"] == t]) > 0]
-                    icf_p.append(precision_at_k(ids2, rel, eval_k))
-                    icf_r.append(recall_at_k(ids2, rel, eval_k))
-                except: pass
+                    recs2 = icf_recommend(uid, matrix, item_sim2, movie_ids, movies, eval_k)
+                    ids2  = [title_to_id[t] for t in recs2["Title"].tolist() if t in title_to_id]
+                    icf_p2.append(precision_at_k(ids2, rel, eval_k))
+                except:
+                    pass
+
                 try:
-                    r3 = svd_recommend(uid, U2, s2, Vt2, m2, user_ids, movie_ids,
-                       matrix, movies, eval_k)
-                    ids3 = [movies[movies["title"] == t]["movieId"].values[0]
-                        for t in r3["Title"].tolist()
-                        if len(movies[movies["title"] == t]) > 0]
-                    svd_p.append(precision_at_k(ids3, rel, eval_k))
-                    svd_r.append(recall_at_k(ids3, rel, eval_k))
-                except: pass
+                    recs3 = svd_recommend(uid, U2, s2, Vt2, m2, user_ids,
+                                          movie_ids, matrix, movies, eval_k)
+                    ids3  = [title_to_id[t] for t in recs3["Title"].tolist() if t in title_to_id]
+                    svd_p2.append(precision_at_k(ids3, rel, eval_k))
+                except:
+                    pass
+
+            progress.empty()
+
+            avg_ucf = np.mean(ucf_p2) if ucf_p2 else 0.0
+            avg_icf = np.mean(icf_p2) if icf_p2 else 0.0
+            avg_svd = np.mean(svd_p2) if svd_p2 else 0.0
+            best    = max(["User-CF","Item-CF","SVD"],
+                          key=lambda m: {"User-CF":avg_ucf,"Item-CF":avg_icf,"SVD":avg_svd}[m])
+
+            st.divider()
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric(f"User-CF Precision@{eval_k}", f"{avg_ucf*100:.2f}%")
+            c2.metric(f"Item-CF Precision@{eval_k}", f"{avg_icf*100:.2f}%")
+            c3.metric(f"SVD Precision@{eval_k}",     f"{avg_svd*100:.2f}%")
+            c4.metric("Best Model", best)
+
+            st.divider()
+            st.markdown("#### Algorithm Comparison")
+            comp_df = pd.DataFrame({
+                "Model": ["User-CF", "Item-CF", "SVD"],
+                f"Precision@{eval_k}": [avg_ucf, avg_icf, avg_svd],
+            })
+            fig_comp = px.bar(comp_df, x="Model", y=f"Precision@{eval_k}",
+                              color=f"Precision@{eval_k}",
+                              color_continuous_scale=[[0,"#dbeafe"],[1,"#1d4ed8"]],
+                              text=f"Precision@{eval_k}")
+            fig_comp.update_traces(texttemplate="%{text:.3f}", textposition="outside")
+            fig_comp.update_layout(**PLOTLY_LAYOUT, coloraxis_showscale=False,
+                                   yaxis=dict(gridcolor="rgba(37,99,235,0.08)"),
+                                   xaxis=dict(showgrid=False))
+            st.plotly_chart(fig_comp, use_container_width=True)
+
+            st.markdown("#### Evaluation Parameters Used")
+            st.dataframe(pd.DataFrame([{
+                "K (cutoff)": eval_k,
+                "Relevance Threshold": f">= {eval_thresh}*",
+                "Test Users": len(test_users),
+                "UCF Neighbors": n_neighbors,
+                "SVD Factors": 30,
+            }]), use_container_width=True, hide_index=True)
+        
                             
                     
                 
