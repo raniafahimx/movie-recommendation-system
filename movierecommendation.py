@@ -20,8 +20,7 @@ warnings.filterwarnings("ignore")
 
 # ── Page config ────────────────────────────────────────────────
 st.set_page_config(
-    page_title="CineAI · Movie Recommendation Engine",
-    page_icon="🎬",
+    page_title="CineAI · Movie Recommendation Engine by R•F",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -229,7 +228,7 @@ def render_header():
             font-size:24px;
             box-shadow:0 4px 16px rgba(37,99,235,0.4);
             flex-shrink:0;
-        ">🎬</div>
+        "></div>
         <div>
             <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:26px;
                         color:#0a1628;letter-spacing:-1px;line-height:1;">CineAI</div>
@@ -254,7 +253,7 @@ def render_header():
 # ══════════════════════════════════════════════════════════════
 # DATA LOADING
 # ══════════════════════════════════════════════════════════════
-DATA_PATH = "/Users/raniaf./Desktop/ml-latest-small/"
+DATA_PATH = "ml-latest-small/"
 
 @st.cache_data(show_spinner=False)
 def load_data():
@@ -499,7 +498,7 @@ def main():
         st.markdown("""
         <div style="font-family:'Syne',sans-serif;font-weight:800;
                     font-size:18px;color:#0a1628;margin-bottom:4px;">
-            ⚙️ Configuration
+            Configuration
         </div>
         <div style="font-size:12px;color:#8fa3c8;margin-bottom:20px;">
             Tune the ML models
@@ -510,11 +509,11 @@ def main():
         st.markdown(f"""
         <div style="background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.15);
                     border-radius:10px;padding:14px;font-size:13px;line-height:2;">
-            🎬 <b>{len(movies):,}</b> movies<br>
-            ⭐ <b>{len(ratings):,}</b> ratings<br>
-            👤 <b>{ratings['userId'].nunique():,}</b> users<br>
-            🏷️ <b>{len(tags):,}</b> tags<br>
-            📊 Avg: <b>{ratings['rating'].mean():.2f}★</b>
+            <b>{len(movies):,}</b> movies<br>
+            <b>{len(ratings):,}</b> ratings<br>
+            <b>{ratings['userId'].nunique():,}</b> users<br>
+            <b>{len(tags):,}</b> tags<br>
+            Avg: <b>{ratings['rating'].mean():.2f}★</b>
         </div>
         """, unsafe_allow_html=True)
 
@@ -544,12 +543,12 @@ def main():
 
     # ── Tabs ───────────────────────────────────────────────────
     tabs = st.tabs([
-        "🏠 Overview",
-        "👥 User-Based CF",
-        "🎥 Item-Based CF",
-        "🧮 SVD Factorization",
-        "📊 Explore Dataset",
-        "📈 Evaluation",
+        "•Overview•",
+        "•User-Based CF•",
+        "•Item-Based CF•",
+        "•SVD Factorization•",
+        "•Explore Dataset•",
+        "•Evaluation•",
     ])
 
 
@@ -597,7 +596,7 @@ def main():
         st.divider()
         col_a, col_b = st.columns(2)
         with col_a:
-            st.markdown("#### 🏆 Top Rated Movies (min 50 ratings)")
+            st.markdown("#### Top Rated Movies (min 50 ratings)")
             top_rated = (
                 ratings.groupby("movieId")["rating"]
                 .agg(avg_rating="mean", n_ratings="count")
@@ -614,7 +613,7 @@ def main():
                 use_container_width=True, hide_index=True,
             )
         with col_b:
-            st.markdown("#### 🔥 Most Popular Movies")
+            st.markdown("#### Most Popular Movies")
             popular = (
                 ratings.groupby("movieId")["rating"]
                 .agg(n_ratings="count", avg_rating="mean")
@@ -670,7 +669,7 @@ def main():
             st.divider()
             left, right = st.columns(2)
             with left:
-                st.markdown("#### 👥 Most Similar Users")
+                st.markdown("#### Most Similar Users")
                 fig = px.bar(sim_df, x="User ID", y="Similarity",
                              color="Similarity",
                              color_continuous_scale=[[0,"#dbeafe"],[1,"#1d4ed8"]],
@@ -685,7 +684,7 @@ def main():
                     st.dataframe(sim_df, use_container_width=True, hide_index=True)
 
             with right:
-                st.markdown(f"#### 🎬 Top {n_recs} Recommendations")
+                st.markdown(f"#### Top {n_recs} Recommendations")
                 if recs.empty:
                     st.info("No recommendations found for this user.")
                 else:
@@ -710,7 +709,7 @@ def main():
 
         col_l, col_r = st.columns([1, 1])
         with col_l:
-            search_query = st.text_input("🔍 Search a movie to find similar titles", placeholder="e.g. Toy Story")
+            search_query = st.text_input("Search a movie to find similar titles", placeholder="e.g. Toy Story")
             run_icf_user = st.button("▶ Get Recommendations for User", key="icf_user_btn")
 
         with st.spinner("Computing item-item similarity matrix..."):
@@ -721,7 +720,7 @@ def main():
                 icf_recs = icf_recommend(demo_user, matrix, item_sim, movie_ids, movies, n_recs)
 
             st.divider()
-            st.markdown(f"#### 🎬 Item-CF Recommendations for User {demo_user}")
+            st.markdown(f"#### Item-CF Recommendations for User {demo_user}")
             if icf_recs.empty:
                 st.info("No recommendations found.")
             else:
@@ -739,7 +738,7 @@ def main():
                 if st.button("🔎 Find Similar Movies", key="icf_sim_btn"):
                     sim_movies = icf_similar_movies(chosen_id, item_sim, movie_ids, movies, n=12)
                     st.divider()
-                    st.markdown(f"#### 🎬 Movies Similar to *{chosen_title}*")
+                    st.markdown(f"#### Movies Similar to *{chosen_title}*")
                     if sim_movies.empty:
                         st.info("Not enough rating data for this movie.")
                     else:
@@ -758,7 +757,7 @@ def main():
                             st.dataframe(sim_movies, use_container_width=True, hide_index=True)
 
                         # Genre breakdown
-                        st.markdown("#### 🎭 Genre Distribution of Similar Movies")
+                        st.markdown("#### Genre Distribution of Similar Movies")
                         gcount = defaultdict(int)
                         for gs in sim_movies["Genres"].dropna():
                             for g in gs.split("|"):
@@ -798,7 +797,7 @@ def main():
             left, right = st.columns(2)
 
             with left:
-                st.markdown("#### 📉 Singular Value Spectrum")
+                st.markdown("#### Singular Value Spectrum")
                 st.plotly_chart(singular_value_chart(s[:30]), use_container_width=True)
 
                 total = (s**2).sum()
@@ -809,7 +808,7 @@ def main():
                 c2.metric("Var. Exp. (top 10)", f"{cum10:.1f}%")
                 c3.metric("Top Σ Value", f"{s[0]:.1f}")
 
-                st.markdown("#### 🔢 Top Singular Values")
+                st.markdown("#### Top Singular Values")
                 sdf = pd.DataFrame({
                     "Factor": range(1, min(15, len(s))+1),
                     "Singular Value": s[:15].round(3),
@@ -818,7 +817,7 @@ def main():
                 st.dataframe(sdf, use_container_width=True, hide_index=True)
 
             with right:
-                st.markdown(f"#### 🎬 SVD Recommendations for User {demo_user}")
+                st.markdown(f"#### SVD Recommendations for User {demo_user}")
                 if svd_recs.empty:
                     st.info("No recommendations found.")
                 else:
@@ -830,7 +829,7 @@ def main():
     # TAB 4 — EXPLORE
     # ══════════════════════════════════════════════════════════
     with tabs[4]:
-        st.markdown("### 🔍 Explore the Dataset")
+        st.markdown("### Explore the Dataset")
 
         search_movie = st.text_input("Search for a movie profile", placeholder="e.g. Matrix, Inception...")
 
@@ -872,7 +871,7 @@ def main():
                         st.info("No tags for this movie.")
 
         st.divider()
-        st.markdown("### 🏷️ Top 40 User Tags")
+        st.markdown("### Top 40 User Tags")
         all_tags = tags["tag"].str.lower().value_counts().head(40).reset_index()
         all_tags.columns = ["Tag","Uses"]
         fig_tags = px.treemap(all_tags, path=["Tag"], values="Uses",
@@ -882,7 +881,7 @@ def main():
         st.plotly_chart(fig_tags, use_container_width=True)
 
         st.divider()
-        st.markdown("### 👤 User Rating Profile")
+        st.markdown("### User Rating Profile")
         explore_user = st.selectbox("Pick a user:", sorted(ratings["userId"].unique())[:100],
                                     key="explore_user")
         u_ratings = ratings[ratings["userId"] == explore_user].merge(
@@ -1002,7 +1001,7 @@ def main():
             c1.metric(f"User-CF Precision@{eval_k}", f"{avg_ucf*100:.2f}%")
             c2.metric(f"Item-CF Precision@{eval_k}", f"{avg_icf*100:.2f}%")
             c3.metric(f"SVD Precision@{eval_k}",     f"{avg_svd*100:.2f}%")
-            c4.metric("🏆 Best Model", best)
+            c4.metric("Best Model", best)
 
             st.divider()
             st.markdown("#### Algorithm Comparison")
