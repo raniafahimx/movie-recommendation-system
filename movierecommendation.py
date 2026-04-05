@@ -945,15 +945,24 @@ def main():
                 except: pass
                 try:
                     r2 = icf_recommend(uid, matrix, item_sim2, movie_ids, movies, eval_k)
-                    icf_p.append(precision_at_k([], rel, eval_k))
-                    icf_r.append(0.0)
+                    ids2 = [movies[movies["title"] == t]["movieId"].values[0]
+                        for t in r2["Title"].tolist()
+                        if len(movies[movies["title"] == t]) > 0]
+                    icf_p.append(precision_at_k(ids2, rel, eval_k))
+                    icf_r.append(recall_at_k(ids2, rel, eval_k))
                 except: pass
                 try:
                     r3 = svd_recommend(uid, U2, s2, Vt2, m2, user_ids, movie_ids,
-                                       matrix, movies, eval_k)
-                    svd_p.append(precision_at_k([], rel, eval_k))
-                    svd_r.append(0.0)
+                       matrix, movies, eval_k)
+                    ids3 = [movies[movies["title"] == t]["movieId"].values[0]
+                        for t in r3["Title"].tolist()
+                        if len(movies[movies["title"] == t]) > 0]
+                    svd_p.append(precision_at_k(ids3, rel, eval_k))
+                    svd_r.append(recall_at_k(ids3, rel, eval_k))
                 except: pass
+                            
+                    
+                
 
             progress.empty()
 
