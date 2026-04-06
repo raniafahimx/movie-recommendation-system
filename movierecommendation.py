@@ -7,6 +7,7 @@
 """
 
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -927,184 +928,507 @@ hr { border-color: var(--border-light) !important; opacity: 0.5; }
 
 
 # ══════════════════════════════════════════════════════════════
-# HERO SECTION
+# HERO SECTION  — rendered via components.html() so raw HTML
+# is never escaped by Streamlit's markdown sanitiser.
+# The hero iframe breaks out of the Streamlit column padding
+# via CSS injected into the PARENT page (see MASTER CSS above).
 # ══════════════════════════════════════════════════════════════
+
+# Negative-margin shim so the iframe visually spans edge-to-edge
+_HERO_SHIM_CSS = """
+<style>
+/* Pull the hero iframe to full viewport width */
+[data-testid="stCustomComponentV1"] {
+    width: 100vw !important;
+    margin-left: calc(-1 * (100vw - 100%) / 2) !important;
+    display: block;
+}
+iframe[title="components.html"] {
+    display: block;
+}
+</style>
+"""
+
 def render_hero():
-    st.markdown("""
-    <div class="cineai-hero-wrapper">
+    # Inject shim into parent page
+    st.markdown(_HERO_SHIM_CSS, unsafe_allow_html=True)
 
-      <!-- Background video with JS fade loop -->
-      <video id="hero-video" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_065045_c44942da-53c6-4804-b734-f9e07fc22e08.mp4"
-             muted playsinline preload="auto" aria-hidden="true"></video>
+    # Full self-contained hero HTML — no st.markdown escaping issues
+    hero_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Geist Sans';
+    src: url('https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2');
+    font-weight: 400; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist Sans';
+    src: url('https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/Geist-Medium.woff2') format('woff2');
+    font-weight: 500; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist Sans';
+    src: url('https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/Geist-Bold.woff2') format('woff2');
+    font-weight: 700; font-display: swap;
+  }
 
-      <!-- Dark overlay -->
-      <div class="hero-overlay"></div>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      <!-- Glow orb -->
-      <div class="hero-glow-orb"></div>
+  html, body {
+    width: 100%; height: 100%;
+    background: #070720;
+    font-family: 'Geist Sans', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
 
-      <!-- All content -->
-      <div class="hero-content">
+  /* ── wrapper ── */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #070720;
+  }
 
-        <!-- Navbar -->
-        <nav class="hero-navbar">
-          <div class="hero-nav-logo">
-            <div class="hero-nav-logo-icon">🎬</div>
-            CineAI
-          </div>
-          <div class="hero-nav-links">
-            <button class="hero-nav-link">Overview</button>
-            <button class="hero-nav-link">Models</button>
-            <button class="hero-nav-link">Evaluation</button>
-            <button class="hero-nav-link">Dataset</button>
-          </div>
-          <button class="hero-nav-cta">Get Started ↓</button>
-        </nav>
-        <div class="hero-navbar-divider"></div>
+  /* ── video ── */
+  #hero-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0; z-index: 0;
+  }
 
-        <!-- Hero body -->
-        <div class="hero-body">
-          <div class="hero-body-inner">
+  /* ── overlays ── */
+  .hero-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba(7,7,32,0.55) 0%,
+      rgba(7,7,32,0.28) 40%,
+      rgba(7,7,32,0.48) 72%,
+      rgba(7,7,32,0.90) 100%
+    );
+  }
+  .hero-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -52%);
+    width: min(860px, 90vw); height: 480px;
+    background: rgba(7,7,32,0.70);
+    filter: blur(82px);
+    border-radius: 50%;
+    z-index: 2; pointer-events: none;
+  }
 
-            <div class="hero-eyebrow">
-              <span class="hero-eyebrow-dot"></span>
-              MovieLens 100K · ML Recommendation Engine
-            </div>
+  /* ── content layer ── */
+  .hero-content {
+    position: relative; z-index: 3;
+    display: flex; flex-direction: column;
+    min-height: 100vh;
+  }
 
-            <h1 class="hero-headline">
-              Discover<br>
-              <span class="hero-headline-accent">Cinema</span>
-            </h1>
+  /* ── navbar ── */
+  nav.navbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px; width: 100%;
+  }
+  .nav-logo {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 700; font-size: 22px; color: #fff;
+    letter-spacing: -0.5px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #A7C7E7 0%, #008080 100%);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    box-shadow: 0 4px 16px rgba(0,128,128,0.4);
+    flex-shrink: 0;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 4px;
+  }
+  .nav-link {
+    font-family: 'Geist Sans', sans-serif;
+    font-weight: 400; font-size: 14px;
+    color: rgba(255,255,255,0.80);
+    padding: 7px 14px; border-radius: 8px;
+    background: transparent; border: none;
+    cursor: pointer;
+    transition: background 0.18s ease, color 0.18s ease;
+  }
+  .nav-link:hover { background: rgba(255,255,255,0.09); color: #fff; }
+  .nav-cta {
+    font-family: 'Geist Sans', sans-serif;
+    font-weight: 500; font-size: 13px;
+    color: #191970; background: #fff;
+    padding: 8px 20px; border-radius: 50px; border: none;
+    cursor: pointer; letter-spacing: 0.1px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+    transition: background 0.22s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease;
+  }
+  .nav-cta:hover {
+    background: #A7C7E7;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+  }
+  .nav-divider {
+    height: 1px; margin: 0 48px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
+  }
 
-            <p class="hero-subtitle">
-              Powered by User-CF, Item-CF &amp; SVD Matrix Factorization —
-              intelligent film recommendations built on real viewing patterns.
-            </p>
+  /* ── body ── */
+  .hero-body {
+    flex: 1; display: flex;
+    align-items: center; justify-content: center;
+    padding: 40px 24px;
+  }
+  .hero-inner { text-align: center; max-width: 860px; width: 100%; }
 
-            <div class="hero-cta-row">
-              <a href="#" class="hero-btn-primary">Explore Recommendations</a>
-              <a href="#" class="hero-btn-secondary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
-                How It Works
-              </a>
-            </div>
+  /* eyebrow */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 1.8px; text-transform: uppercase;
+    color: rgba(167,199,231,0.85);
+    background: rgba(167,199,231,0.08);
+    border: 1px solid rgba(167,199,231,0.22);
+    padding: 6px 16px; border-radius: 50px;
+    margin-bottom: 28px;
+    animation: fadeSlideDown 0.7s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .eyebrow-dot {
+    width: 6px; height: 6px;
+    background: #008080; border-radius: 50%;
+    animation: pulseDot 2s ease-in-out infinite;
+  }
 
-            <!-- Stats -->
-            <div class="hero-stats">
-              <div class="hero-stat">
-                <div class="hero-stat-value">9,742</div>
-                <div class="hero-stat-label">Movies</div>
-              </div>
-              <div class="hero-stat-divider"></div>
-              <div class="hero-stat">
-                <div class="hero-stat-value">100K+</div>
-                <div class="hero-stat-label">Ratings</div>
-              </div>
-              <div class="hero-stat-divider"></div>
-              <div class="hero-stat">
-                <div class="hero-stat-value">610</div>
-                <div class="hero-stat-label">Users</div>
-              </div>
-              <div class="hero-stat-divider"></div>
-              <div class="hero-stat">
-                <div class="hero-stat-value">3</div>
-                <div class="hero-stat-label">ML Models</div>
-              </div>
-            </div>
+  /* headline */
+  h1.headline {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 700;
+    font-size: clamp(54px, 9.5vw, 112px);
+    line-height: 1.0; letter-spacing: -0.03em;
+    color: #fff; margin-bottom: 4px;
+    animation: fadeSlideUp 0.75s cubic-bezier(0.22,1,0.36,1) 0.15s both;
+  }
+  .headline-accent {
+    background: linear-gradient(120deg, #A7C7E7 0%, #fff 40%, #008080 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-          </div>
+  /* subtitle */
+  p.subtitle {
+    font-family: 'Geist Sans', sans-serif;
+    font-size: clamp(15px, 2vw, 18px);
+    font-weight: 400;
+    color: rgba(228,235,255,0.70);
+    line-height: 1.72; max-width: 520px;
+    margin: 18px auto 0;
+    animation: fadeSlideUp 0.75s cubic-bezier(0.22,1,0.36,1) 0.28s both;
+  }
+
+  /* CTA row */
+  .cta-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin-top: 36px; flex-wrap: wrap;
+    animation: fadeSlideUp 0.75s cubic-bezier(0.22,1,0.36,1) 0.40s both;
+  }
+  .btn-primary {
+    font-family: 'Geist Sans', sans-serif;
+    font-weight: 500; font-size: 14px;
+    color: #191970; background: #fff;
+    padding: 14px 32px; border-radius: 12px; border: none;
+    cursor: pointer; letter-spacing: 0.1px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.9);
+    transition: background 0.22s ease, transform 0.26s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover {
+    background: #A7C7E7;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(0,0,0,0.3);
+  }
+  .btn-secondary {
+    font-family: 'Geist Sans', sans-serif;
+    font-weight: 400; font-size: 14px;
+    color: rgba(255,255,255,0.82);
+    background: rgba(255,255,255,0.06);
+    padding: 14px 28px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.14);
+    cursor: pointer; letter-spacing: 0.1px;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(167,199,231,0.38);
+    color: #fff;
+  }
+
+  /* stats */
+  .stats {
+    display: flex; align-items: center; justify-content: center;
+    gap: 48px; margin-top: 52px;
+    animation: fadeIn 1s cubic-bezier(0.22,1,0.36,1) 0.60s both;
+  }
+  .stat { text-align: center; }
+  .stat-value {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 700; font-size: 28px;
+    color: #fff; letter-spacing: -0.5px; line-height: 1;
+  }
+  .stat-label {
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 11px; color: rgba(167,199,231,0.58);
+    letter-spacing: 0.8px; text-transform: uppercase; margin-top: 4px;
+  }
+  .stat-divider { width: 1px; height: 36px; background: rgba(167,199,231,0.18); }
+
+  /* ── marquee ── */
+  .marquee-section {
+    padding: 28px 48px 36px;
+    animation: fadeIn 1s ease 0.8s both;
+  }
+  .marquee-label {
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 11px; color: rgba(167,199,231,0.40);
+    letter-spacing: 1px; text-transform: uppercase;
+    text-align: center; margin-bottom: 16px;
+  }
+  .marquee-wrapper {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 14%, black 86%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, black 14%, black 86%, transparent 100%);
+  }
+  .marquee-track {
+    display: flex; gap: 40px;
+    animation: marqueeScroll 28s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    display: flex; align-items: center; gap: 10px;
+    color: rgba(255,255,255,0.52);
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.2px;
+    white-space: nowrap;
+    transition: color 0.18s ease;
+  }
+  .marquee-item:hover { color: rgba(255,255,255,0.85); }
+  .m-icon {
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,0.055);
+    border: 1px solid rgba(167,199,231,0.14);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #A7C7E7;
+    flex-shrink: 0;
+  }
+
+  /* ── keyframes ── */
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.45; transform: scale(0.68); }
+  }
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── responsive ── */
+  @media (max-width: 768px) {
+    nav.navbar { padding: 16px 20px; }
+    .nav-divider { margin: 0 20px; }
+    .marquee-section { padding: 20px 20px 28px; }
+    .stats { gap: 22px; flex-wrap: wrap; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .stat-divider { display: none; }
+    h1.headline { font-size: clamp(38px, 12vw, 60px); }
+    .stats { gap: 18px; }
+  }
+</style>
+</head>
+<body>
+<section class="hero">
+  <video id="hero-video"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_065045_c44942da-53c6-4804-b734-f9e07fc22e08.mp4"
+    muted playsinline preload="auto" aria-hidden="true"></video>
+
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-content">
+    <nav class="navbar">
+      <div class="nav-logo">
+        <div class="nav-logo-icon">&#127916;</div>
+        CineAI
+      </div>
+      <div class="nav-links">
+        <button class="nav-link">Overview</button>
+        <button class="nav-link">Models</button>
+        <button class="nav-link">Evaluation</button>
+        <button class="nav-link">Dataset</button>
+      </div>
+      <button class="nav-cta">Get Started &#8595;</button>
+    </nav>
+    <div class="nav-divider"></div>
+
+    <div class="hero-body">
+      <div class="hero-inner">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          MovieLens 100K &middot; ML Recommendation Engine
         </div>
 
-        <!-- Marquee -->
-        <div class="hero-marquee-section">
-          <div class="hero-marquee-label">Powered by industry-grade algorithms</div>
-          <div class="marquee-track-wrapper">
-            <div class="marquee-track">
-              <!-- Set A -->
-              <div class="marquee-item"><div class="marquee-icon">U</div>User-CF</div>
-              <div class="marquee-item"><div class="marquee-icon">I</div>Item-CF</div>
-              <div class="marquee-item"><div class="marquee-icon">S</div>SVD Factorization</div>
-              <div class="marquee-item"><div class="marquee-icon">P</div>Precision@K</div>
-              <div class="marquee-item"><div class="marquee-icon">C</div>Cosine Similarity</div>
-              <div class="marquee-item"><div class="marquee-icon">M</div>MovieLens</div>
-              <div class="marquee-item"><div class="marquee-icon">L</div>Latent Factors</div>
-              <div class="marquee-item"><div class="marquee-icon">R</div>Recall@K</div>
-              <!-- Set B (duplicate for seamless loop) -->
-              <div class="marquee-item"><div class="marquee-icon">U</div>User-CF</div>
-              <div class="marquee-item"><div class="marquee-icon">I</div>Item-CF</div>
-              <div class="marquee-item"><div class="marquee-icon">S</div>SVD Factorization</div>
-              <div class="marquee-item"><div class="marquee-icon">P</div>Precision@K</div>
-              <div class="marquee-item"><div class="marquee-icon">C</div>Cosine Similarity</div>
-              <div class="marquee-item"><div class="marquee-icon">M</div>MovieLens</div>
-              <div class="marquee-item"><div class="marquee-icon">L</div>Latent Factors</div>
-              <div class="marquee-item"><div class="marquee-icon">R</div>Recall@K</div>
-            </div>
-          </div>
+        <h1 class="headline">
+          Discover<br>
+          <span class="headline-accent">Cinema</span>
+        </h1>
+
+        <p class="subtitle">
+          Powered by User-CF, Item-CF &amp; SVD Matrix Factorization &mdash;
+          intelligent film recommendations built on real viewing patterns.
+        </p>
+
+        <div class="cta-row">
+          <button class="btn-primary">Explore Recommendations</button>
+          <button class="btn-secondary">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+            How It Works
+          </button>
         </div>
 
-      </div><!-- /hero-content -->
-    </div><!-- /hero-wrapper -->
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-value">9,742</div>
+            <div class="stat-label">Movies</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-value">100K+</div>
+            <div class="stat-label">Ratings</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-value">610</div>
+            <div class="stat-label">Users</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-value">3</div>
+            <div class="stat-label">ML Models</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <!-- Video fade-loop script -->
-    <script>
-    (function() {
-      function initVideo() {
-        var v = document.getElementById('hero-video');
-        if (!v) { setTimeout(initVideo, 200); return; }
+    <div class="marquee-section">
+      <div class="marquee-label">Powered by industry-grade algorithms</div>
+      <div class="marquee-wrapper">
+        <div class="marquee-track">
+          <div class="marquee-item"><div class="m-icon">U</div>User-CF</div>
+          <div class="marquee-item"><div class="m-icon">I</div>Item-CF</div>
+          <div class="marquee-item"><div class="m-icon">S</div>SVD Factorization</div>
+          <div class="marquee-item"><div class="m-icon">P</div>Precision@K</div>
+          <div class="marquee-item"><div class="m-icon">C</div>Cosine Similarity</div>
+          <div class="marquee-item"><div class="m-icon">M</div>MovieLens</div>
+          <div class="marquee-item"><div class="m-icon">L</div>Latent Factors</div>
+          <div class="marquee-item"><div class="m-icon">R</div>Recall@K</div>
+          <div class="marquee-item"><div class="m-icon">U</div>User-CF</div>
+          <div class="marquee-item"><div class="m-icon">I</div>Item-CF</div>
+          <div class="marquee-item"><div class="m-icon">S</div>SVD Factorization</div>
+          <div class="marquee-item"><div class="m-icon">P</div>Precision@K</div>
+          <div class="marquee-item"><div class="m-icon">C</div>Cosine Similarity</div>
+          <div class="marquee-item"><div class="m-icon">M</div>MovieLens</div>
+          <div class="marquee-item"><div class="m-icon">L</div>Latent Factors</div>
+          <div class="marquee-item"><div class="m-icon">R</div>Recall@K</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        var FADE_DURATION = 500;
-        var rafId = null;
+<script>
+(function() {
+  var v = document.getElementById('hero-video');
+  if (!v) return;
+  var FADE = 500, raf = null;
 
-        function fadeIn() {
-          var start = null;
-          function step(ts) {
-            if (!start) start = ts;
-            var p = Math.min((ts - start) / FADE_DURATION, 1);
-            v.style.opacity = p;
-            if (p < 1) rafId = requestAnimationFrame(step);
-          }
-          rafId = requestAnimationFrame(step);
-        }
+  function fadeIn() {
+    var t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min((ts - t0) / FADE, 1);
+      v.style.opacity = p;
+      if (p < 1) raf = requestAnimationFrame(step);
+    }
+    raf = requestAnimationFrame(step);
+  }
 
-        function fadeOut(cb) {
-          var startOpacity = parseFloat(v.style.opacity) || 1;
-          var start = null;
-          function step(ts) {
-            if (!start) start = ts;
-            var p = Math.min((ts - start) / FADE_DURATION, 1);
-            v.style.opacity = startOpacity * (1 - p);
-            if (p < 1) { rafId = requestAnimationFrame(step); }
-            else if (cb) cb();
-          }
-          rafId = requestAnimationFrame(step);
-        }
+  function fadeOut(cb) {
+    var op0 = parseFloat(v.style.opacity) || 1, t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min((ts - t0) / FADE, 1);
+      v.style.opacity = op0 * (1 - p);
+      if (p < 1) { raf = requestAnimationFrame(step); }
+      else if (cb) cb();
+    }
+    raf = requestAnimationFrame(step);
+  }
 
-        v.addEventListener('canplay', function() {
+  v.addEventListener('canplay', function() {
+    v.play().then(fadeIn).catch(function(){});
+  }, { once: true });
+
+  v.addEventListener('timeupdate', function() {
+    if (v.duration && v.currentTime >= v.duration - 0.6 && !v._fo) {
+      v._fo = true;
+      fadeOut(function() {
+        v.pause(); v.style.opacity = 0; v._fo = false;
+        setTimeout(function() {
+          v.currentTime = 0;
           v.play().then(fadeIn).catch(function(){});
-        }, { once: true });
+        }, 120);
+      });
+    }
+  });
 
-        v.addEventListener('timeupdate', function() {
-          if (v.duration && v.currentTime >= v.duration - 0.6 && !v._fadingOut) {
-            v._fadingOut = true;
-            fadeOut(function() {
-              v.pause();
-              v.style.opacity = 0;
-              v._fadingOut = false;
-              setTimeout(function() { v.currentTime = 0; v.play().then(fadeIn).catch(function(){}); }, 120);
-            });
-          }
-        });
+  v.load();
+})();
+</script>
+</body>
+</html>"""
 
-        v.load();
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initVideo);
-      } else {
-        initVideo();
-      }
-    })();
-    </script>
-    """, unsafe_allow_html=True)
+    components.html(hero_html, height=820, scrolling=False)
 
 
 # ══════════════════════════════════════════════════════════════
