@@ -514,10 +514,10 @@ def render_hero():
         <span class="logo-cine">Cine</span><span class="logo-ai">AI</span><span class="logo-dot"></span>
       </div>
       <div class="nav-links">
-        <a class="nav-link" href="{overview_url}" target="_parent">Overview</a>
-        <a class="nav-link" href="{models_url}" target="_parent">Models</a>
-        <a class="nav-link" href="{evaluation_url}" target="_parent">Evaluation</a>
-        <a class="nav-link" href="{dataset_url}" target="_parent">Dataset</a>
+        <a class="nav-link" href="{overview_url}" target="_top">Overview</a>
+        <a class="nav-link" href="{models_url}" target="_top">Models</a>
+        <a class="nav-link" href="{evaluation_url}" target="_top">Evaluation</a>
+        <a class="nav-link" href="{dataset_url}" target="_top">Dataset</a>
       </div>
     </nav>
     <div class="nav-divider"></div>
@@ -530,7 +530,7 @@ def render_hero():
         <h1 class="headline">Discover<br><span class="headline-accent">Cinema</span></h1>
         <p class="subtitle">Powered by User-CF, Item-CF &amp; SVD Matrix Factorization — intelligent film recommendations built on real viewing patterns.</p>
         <div class="cta-row">
-          <a class="btn-secondary" href="{overview_url}" target="_parent">
+          <a class="btn-secondary" href="{overview_url}" target="_top">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
             How It Works
           </a>
