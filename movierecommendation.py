@@ -426,11 +426,6 @@ header[data-testid="stHeader"] { background: transparent !important; backdrop-fi
 def render_hero():
     st.markdown(_HERO_SHIM_CSS, unsafe_allow_html=True)
 
-    # Build absolute URLs for nav links
-    overview_url   = "/?page=overview"
-    models_url     = "/?page=models"
-    evaluation_url = "/?page=evaluation"
-    dataset_url    = "/?page=dataset"
 
     hero_html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -513,12 +508,7 @@ def render_hero():
       <div class="nav-logo">
         <span class="logo-cine">Cine</span><span class="logo-ai">AI</span><span class="logo-dot"></span>
       </div>
-      <div class="nav-links">
-        <a class="nav-link" href="{overview_url}" target="_top">Overview</a>
-        <a class="nav-link" href="{models_url}" target="_top">Models</a>
-        <a class="nav-link" href="{evaluation_url}" target="_top">Evaluation</a>
-        <a class="nav-link" href="{dataset_url}" target="_top">Dataset</a>
-      </div>
+      
     </nav>
     <div class="nav-divider"></div>
     <div class="hero-body">
@@ -1547,23 +1537,24 @@ def page_evaluation(movies, ratings, matrix, user_ids, movie_ids,
         "SVD":      [0.271, 0.22, 0.85, 0.55, 0.68, 0.75],
     }
     colors = {"User-CF": "#33006F", "Item-CF": "#006666", "SVD": "#9b7fbd"}
+    fillcolors = {
+        "User-CF": "rgba(51,0,111,0.10)",
+        "Item-CF": "rgba(0,102,102,0.10)",
+        "SVD":     "rgba(155,127,189,0.12)",
+    }
     for model, vals in models_radar.items():
         fig_radar.add_trace(go.Scatterpolar(
             r=vals + [vals[0]], theta=categories + [categories[0]],
             fill="toself", name=model,
             line=dict(color=colors[model], width=2),
-            fillcolor=colors[model].replace("#","rgba(") + ",0.12)" if "#" in colors[model] else colors[model],
+            fillcolor=fillcolors[model],
         ))
     fig_radar.update_layout(**PLOTLY_LAYOUT, height=420,
                             polar=dict(radialaxis=dict(visible=True, range=[0,1],
                                                        gridcolor="rgba(69,44,99,0.15)",
                                                        tickfont=dict(size=10))),
                             legend=dict(orientation="h", y=-0.08))
-    # Fix fill color
-    for trace in fig_radar.data:
-        if trace.name == "User-CF": trace.fillcolor = "rgba(51,0,111,0.10)"
-        elif trace.name == "Item-CF": trace.fillcolor = "rgba(0,102,102,0.10)"
-        else: trace.fillcolor = "rgba(155,127,189,0.12)"
+    
     st.plotly_chart(fig_radar, use_container_width=True)
     st.caption("Novelty and Diversity are normalised proxies computed on sampled users. Speed reflects relative inference time.")
 
