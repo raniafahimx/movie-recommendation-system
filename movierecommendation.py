@@ -1269,7 +1269,7 @@ def page_dataset(movies, ratings, tags, links):
         ("☆", "Credibility", "GroupLens has maintained MovieLens for over 25 years. Its consistency and public availability make it the most widely cited recommender system benchmark, enabling direct comparison with published results."),
         ("〄", "Clean & Curated", "Ratings are collected from real users on movielens.org — not crowdsourced or synthetic. Timestamps, half-star granularity, and user-applied tags provide rich signal with minimal noise."),
         ("⍚", "Ideal Density", "The small variant's 1.7% matrix density is the sweet spot: sparse enough to make recommendation non-trivial, dense enough to compute meaningful similarities without excessive imputation."),
-        ("⌕", "Rich Metadata", "9,742 titles spanning 1902–2018, annotated with 20 genres and linked to IMDb/TMDb IDs, enabling future content-based hybrid extensions with zero additional data collection."),
+        ("⟴", "Rich Metadata", "9,742 titles spanning 1902–2018, annotated with 20 genres and linked to IMDb/TMDb IDs, enabling future content-based hybrid extensions with zero additional data collection."),
         ("⎋", "Proven Benchmarks", "Known baseline Precision@10 values from literature (User-CF ≈ 0.21, Item-CF ≈ 0.19, SVD ≈ 0.26 on comparable splits) allow rigorous validation of our implementation."),
         ("⌭", "Reproducibility", "Fixed dataset, deterministic splits, and publicly documented preprocessing steps mean every experiment in this project is fully reproducible by any researcher."),
     ]
@@ -1513,12 +1513,12 @@ def page_evaluation(movies, ratings, matrix, user_ids, movie_ids,
     # Key findings
     st.markdown("### Key Findings")
     findings = [
-        ("🏆", "SVD Wins Overall", "SVD consistently delivers the highest Precision@K across all cut-offs. Its ability to capture global latent structure compensates for the loss of neighbourhood interpretability, achieving ~15% relative improvement over User-CF."),
-        ("🔁", "User-CF Beats Item-CF", "Despite similar conceptual bases, User-CF outperforms Item-CF by ~4pp on this dataset. This is consistent with MovieLens's relatively dense user profiles (median 68 ratings), giving User-CF sufficient signal for reliable neighbour identification."),
-        ("📈", "SVD Factor Sensitivity", "Performance peaks at k=50 latent factors and plateaus or slightly declines at k=100, suggesting the first 50 singular vectors capture the most informative taste dimensions. Beyond k=60, over-fitting noise in the rating matrix begins to degrade recommendations."),
-        ("🎯", "Precision Drops with K", "All models show declining precision as K grows (P@5 > P@10 > P@20), consistent with theory — the most confident predictions occupy the top slots, while later positions are less certain. This suggests a sweet spot of K=8–12 for practical deployment."),
-        ("❄️", "Cold-Start Penalty", "Users with fewer than 20 ratings score ~40% lower Precision@10 across all models. A content-based warm-up layer or popularity prior is recommended for new-user scenarios."),
-        ("⏱️", "Temporal Ordering Matters", "Experiments with random vs temporal splits showed temporal splits yield ~8% lower precision scores — confirming that random splitting inflates metrics by leaking future information into training. All reported results use the stricter temporal protocol."),
+        ("✔️", "SVD Wins Overall", "SVD consistently delivers the highest Precision@K across all cut-offs. Its ability to capture global latent structure compensates for the loss of neighbourhood interpretability, achieving ~15% relative improvement over User-CF."),
+        ("↹", "User-CF Beats Item-CF", "Despite similar conceptual bases, User-CF outperforms Item-CF by ~4pp on this dataset. This is consistent with MovieLens's relatively dense user profiles (median 68 ratings), giving User-CF sufficient signal for reliable neighbour identification."),
+        ("∬", "SVD Factor Sensitivity", "Performance peaks at k=50 latent factors and plateaus or slightly declines at k=100, suggesting the first 50 singular vectors capture the most informative taste dimensions. Beyond k=60, over-fitting noise in the rating matrix begins to degrade recommendations."),
+        ("⤓Ⓚ", "Precision Drops with K", "All models show declining precision as K grows (P@5 > P@10 > P@20), consistent with theory — the most confident predictions occupy the top slots, while later positions are less certain. This suggests a sweet spot of K=8–12 for practical deployment."),
+        ("⊁", "Cold-Start Penalty", "Users with fewer than 20 ratings score ~40% lower Precision@10 across all models. A content-based warm-up layer or popularity prior is recommended for new-user scenarios."),
+        ("⌦", "Temporal Ordering Matters", "Experiments with random vs temporal splits showed temporal splits yield ~8% lower precision scores — confirming that random splitting inflates metrics by leaking future information into training. All reported results use the stricter temporal protocol."),
     ]
     for i in range(0, len(findings), 3):
         cols = st.columns(3)
