@@ -72,7 +72,7 @@ html, body, [class*="css"] {
     #8a6fb1 75%        /* Lighten the Purple */
   ) !important;
   
-  background-attachment: fixed; /* Keeps the gradient from stretching if the page is long */
+  background-attachment: local; /* Keeps the gradient from stretching if the page is long */
   min-height: 100vh;
 }
 .stApp::before, .stApp::after { display: none !important; }
