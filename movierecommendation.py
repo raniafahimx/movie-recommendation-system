@@ -68,9 +68,9 @@ html, body, [class*="css"] {
 
   background:
 
-    radial-gradient(ellipse at 0% 0%, rgba(72, 50, 72, 0.8) 0%, transparent 25%),
+    radial-gradient(ellipse at 0% 0%, rgba(93, 63, 211, 0.8) 0%, transparent 25%),
 
-    radial-gradient(ellipse at 100% 0%, rgba(51,0,111,0.22) 0%, transparent 20%),
+    radial-gradient(ellipse at 100% 0%, rgba(93, 63, 211,0.22) 0%, transparent 20%),
 
     radial-gradient(ellipse at 50% 100%, rgba(0,102,102,0.20) 0%, transparent 75%),
 
