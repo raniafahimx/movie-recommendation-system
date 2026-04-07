@@ -68,7 +68,7 @@ html, body, [class*="css"] {
 
   background:
 
-    radial-gradient(ellipse at 0% 0%, rgba(93, 63, 211, 0.8) 0%, transparent 25%),
+    radial-gradient(ellipse at 0% 0%, rgba(51, 0, 111, 0.8) 0%, transparent 25%),
 
     radial-gradient(ellipse at 100% 0%, rgba(93, 63, 211,0.22) 0%, transparent 20%),
 
@@ -76,14 +76,7 @@ html, body, [class*="css"] {
 
     radial-gradient(ellipse at 100% 100%, rgba(0,76,76,0.18) 0%, transparent 45%),
 
-    /* Change your last line to this: */
-linear-gradient(180deg, 
-    #1a0b2e 0%,    /* Dark Purple Start */
-    #5a3d8a 45%,   /* Transition Purple */
-    #008080 85%,   /* Teal Mid-point */
-    #e0f2f2 100%   /* Very Light Teal End */
-) !important;
-
+    linear-gradient(170deg, #f5f2fb 0%, #f8f7fc 35%, #f0f5f5 70%, #f2f0f8 100%) !important;
   min-height: 100vh;
 
 }
