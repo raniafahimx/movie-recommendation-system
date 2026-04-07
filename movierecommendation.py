@@ -1980,7 +1980,7 @@ def main():
         eval_users  = st.slider("Test Users", 10, 60, 20)
 
         # Page nav shortcuts in sidebar
-        st.markdown("""<div style="height:1px;background:rgba(216,191,216,0.12);margin:8px 16px 16px;"></div>""", unsafe_allow_html=True)
+        st.markdown("""<div style="height:1px;background:rgba(255,255,255,0.90);margin:8px 16px 16px;"></div>""", unsafe_allow_html=True)
         st.markdown("""<div style="padding:0 16px;font-family:'DM Sans',sans-serif;font-size:10px;
                        letter-spacing:1px;text-transform:uppercase;color:rgba(216,191,216,0.45);
                        margin-bottom:12px;">Navigate</div>""", unsafe_allow_html=True)
@@ -1991,7 +1991,7 @@ def main():
             st.markdown(f'<a href="{url}" style="display:block;font-family:\'DM Sans\',sans-serif;'
                         f'font-size:13px;color:rgba(255,255,255,0.90);text-decoration:none;'
                         f'padding:6px 16px;border-radius:8px;transition:all 0.2s;" '
-                        f'onmouseover="this.style.background=\'rgba(255,255,255,0.08)\'" '
+                        f'onmouseover="this.style.background=\'rgba(216,191,216,0.75)\'" '
                         f'onmouseout="this.style.background=\'transparent\'">{label}</a>',
                         unsafe_allow_html=True)
 
