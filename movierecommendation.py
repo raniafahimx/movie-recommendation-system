@@ -68,8 +68,8 @@ html, body, [class*="css"] {
     180deg, 
     #0f051a 0%,         /* Darkest Purple at the very top */
     #0f051a 35%,        /* Hold the Dark Purple for the Hero Section (~35% of page) */
-    #E6E6FA 55%,        /* Transition to Medium Purple */
-    #8a6fb1 75%        /* Lighten the Purple */
+    #C3B1E1 55%,        /* Transition to Medium Purple */
+    #D8BFD8 75%        /* Lighten the Purple */
   ) !important;
   
   background-attachment: local; /* Keeps the gradient from stretching if the page is long */
