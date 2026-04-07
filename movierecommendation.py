@@ -21,7 +21,7 @@ warnings.filterwarnings("ignore")
 
 # ── Page config ────────────────────────────────────────────────
 st.set_page_config(
-    page_title="CineAI · Intelligent Movie Recommendations",
+    page_title="CineAI · Intelligent Movie Recommendations by R•F",
     page_icon="C",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -854,9 +854,9 @@ def page_overview(movies, ratings, tags, links, matrix, user_ids, movie_ids):
     # What it does
     c1, c2, c3 = st.columns(3)
     cards = [
-        ("❶", "Problem Solved", "Overwhelm at the streaming menu. CineAI narrows 9,742 films to a precise shortlist tailored to each viewer's taste profile, reducing decision fatigue and boosting discovery."),
-        ("❷", "How It Works", "User and item interactions are encoded in a sparse rating matrix. Three algorithms — User-CF, Item-CF, and SVD — each exploit a different facet of that matrix to generate ranked recommendation lists."),
-        ("❸", "How We Measure", "Recommendations are validated offline using Precision@K and Recall@K on an 80/20 temporal hold-out split, ensuring the system is graded on real future preferences rather than past seen items."),
+        ("⓵", "Problem Solved", "Overwhelm at the streaming menu. CineAI narrows 9,742 films to a precise shortlist tailored to each viewer's taste profile, reducing decision fatigue and boosting discovery."),
+        ("⓵", "How It Works", "User and item interactions are encoded in a sparse rating matrix. Three algorithms — User-CF, Item-CF, and SVD — each exploit a different facet of that matrix to generate ranked recommendation lists."),
+        ("⓵", "How We Measure", "Recommendations are validated offline using Precision@K and Recall@K on an 80/20 temporal hold-out split, ensuring the system is graded on real future preferences rather than past seen items."),
     ]
     for col, (icon, title, body) in zip([c1, c2, c3], cards):
         col.markdown(f"""
