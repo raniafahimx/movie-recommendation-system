@@ -69,7 +69,7 @@ html, body, [class*="css"] {
     #0f051a 0%,         /* Darkest Purple at the very top */
     #0f051a 35%,        /* Hold the Dark Purple for the Hero Section (~35% of page) */
     #4b2c71 55%,        /* Transition to Medium Purple */
-    #8a6fb1 75%,        /* Lighten the Purple */
+    #8a6fb1 75%        /* Lighten the Purple */
   ) !important;
   
   background-attachment: fixed; /* Keeps the gradient from stretching if the page is long */
