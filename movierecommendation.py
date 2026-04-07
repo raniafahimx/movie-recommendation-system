@@ -855,8 +855,8 @@ def page_overview(movies, ratings, tags, links, matrix, user_ids, movie_ids):
     c1, c2, c3 = st.columns(3)
     cards = [
         ("⓵", "Problem Solved", "Overwhelm at the streaming menu. CineAI narrows 9,742 films to a precise shortlist tailored to each viewer's taste profile, reducing decision fatigue and boosting discovery."),
-        ("⓵", "How It Works", "User and item interactions are encoded in a sparse rating matrix. Three algorithms — User-CF, Item-CF, and SVD — each exploit a different facet of that matrix to generate ranked recommendation lists."),
-        ("⓵", "How We Measure", "Recommendations are validated offline using Precision@K and Recall@K on an 80/20 temporal hold-out split, ensuring the system is graded on real future preferences rather than past seen items."),
+        ("⓶", "How It Works", "User and item interactions are encoded in a sparse rating matrix. Three algorithms — User-CF, Item-CF, and SVD — each exploit a different facet of that matrix to generate ranked recommendation lists."),
+        ("⓷", "How We Measure", "Recommendations are validated offline using Precision@K and Recall@K on an 80/20 temporal hold-out split, ensuring the system is graded on real future preferences rather than past seen items."),
     ]
     for col, (icon, title, body) in zip([c1, c2, c3], cards):
         col.markdown(f"""
@@ -1266,12 +1266,12 @@ def page_dataset(movies, ratings, tags, links):
     # Why this dataset
     st.markdown("### Why MovieLens?")
     reasons = [
-        ("📚", "Academic Credibility", "GroupLens has maintained MovieLens for over 25 years. Its consistency and public availability make it the most widely cited recommender system benchmark, enabling direct comparison with published results."),
-        ("🧹", "Clean & Curated", "Ratings are collected from real users on movielens.org — not crowdsourced or synthetic. Timestamps, half-star granularity, and user-applied tags provide rich signal with minimal noise."),
-        ("⚖️", "Ideal Density", "The small variant's 1.7% matrix density is the sweet spot: sparse enough to make recommendation non-trivial, dense enough to compute meaningful similarities without excessive imputation."),
-        ("🎬", "Rich Metadata", "9,742 titles spanning 1902–2018, annotated with 20 genres and linked to IMDb/TMDb IDs, enabling future content-based hybrid extensions with zero additional data collection."),
-        ("📊", "Proven Benchmarks", "Known baseline Precision@10 values from literature (User-CF ≈ 0.21, Item-CF ≈ 0.19, SVD ≈ 0.26 on comparable splits) allow rigorous validation of our implementation."),
-        ("🔬", "Reproducibility", "Fixed dataset, deterministic splits, and publicly documented preprocessing steps mean every experiment in this project is fully reproducible by any researcher."),
+        ("☆", "Credibility", "GroupLens has maintained MovieLens for over 25 years. Its consistency and public availability make it the most widely cited recommender system benchmark, enabling direct comparison with published results."),
+        ("〄", "Clean & Curated", "Ratings are collected from real users on movielens.org — not crowdsourced or synthetic. Timestamps, half-star granularity, and user-applied tags provide rich signal with minimal noise."),
+        ("⍚", "Ideal Density", "The small variant's 1.7% matrix density is the sweet spot: sparse enough to make recommendation non-trivial, dense enough to compute meaningful similarities without excessive imputation."),
+        ("⌕", "Rich Metadata", "9,742 titles spanning 1902–2018, annotated with 20 genres and linked to IMDb/TMDb IDs, enabling future content-based hybrid extensions with zero additional data collection."),
+        ("⎋", "Proven Benchmarks", "Known baseline Precision@10 values from literature (User-CF ≈ 0.21, Item-CF ≈ 0.19, SVD ≈ 0.26 on comparable splits) allow rigorous validation of our implementation."),
+        ("⌭", "Reproducibility", "Fixed dataset, deterministic splits, and publicly documented preprocessing steps mean every experiment in this project is fully reproducible by any researcher."),
     ]
     for i in range(0, len(reasons), 3):
         cols = st.columns(3)
