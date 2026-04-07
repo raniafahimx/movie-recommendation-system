@@ -65,14 +65,16 @@ html, body, [class*="css"] {
 
 .stApp {
   background: 
-    /* Deep Purple Spotlight (Top Left) */
-    radial-gradient(ellipse at 0% 0%, rgba(106, 13, 173, 0.6) 0%, transparent 50%),
-    /* Navy/Indigo Spotlight (Top Right) */
-    radial-gradient(ellipse at 100% 0%, rgba(48, 0, 105, 0.5) 0%, transparent 40%),
-    /* Dark Base Gradient (The overall canvas) */
-    linear-gradient(160deg, #1a0b2e 0%, #0f051a 100%) !important;
+    /* Medium Purple Glow (Top Left) */
+    radial-gradient(ellipse at 0% 0%, rgba(138, 75, 175, 0.45) 0%, transparent 45%),
+    
+    /* Soft Teal Glow (Bottom Right) */
+    radial-gradient(ellipse at 100% 100%, rgba(0, 150, 150, 0.35) 0%, transparent 45%),
+    
+    /* The "Medium" Base - Not white, but a soft tinted grey-purple */
+    linear-gradient(160deg, #e9e4f0 0%, #d9e7e7 100%) !important;
+  
   min-height: 100vh;
-  color: white; /* You'll likely need white text now! */
 }
 
 .stApp::before, .stApp::after { display: none !important; }
