@@ -66,7 +66,7 @@ html, body, [class*="css"] {
 .stApp {
   background: 
     /* Medium Purple Glow (Top Left) */
-    radial-gradient(ellipse at 0% 0%, rgba(138, 75, 175, 0.45) 0%, transparent 45%),
+    radial-gradient(ellipse at 0% 0%, rgba(138, 75, 175, 0.15) 0%, transparent 45%),
     
     /* Soft Teal Glow (Bottom Right) */
     radial-gradient(ellipse at 100% 100%, rgba(0, 150, 150, 0.35) 0%, transparent 45%),
