@@ -68,7 +68,7 @@ html, body, [class*="css"] {
     180deg, 
     #0f051a 0%,         /* Darkest Purple at the very top */
     #0f051a 35%,        /* Hold the Dark Purple for the Hero Section (~35% of page) */
-    #4b2c71 55%,        /* Transition to Medium Purple */
+    #E6E6FA 55%,        /* Transition to Medium Purple */
     #8a6fb1 75%        /* Lighten the Purple */
   ) !important;
   
