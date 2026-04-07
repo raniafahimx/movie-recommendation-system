@@ -613,7 +613,7 @@ def render_subnav(active_page=""):
     links_html = ""
     for label, key in pages:
         active_style = "background:linear-gradient(135deg,#1d1160,#33006F);color:#fff;box-shadow:0 4px 14px rgba(29,17,96,0.3);" if key == active_page else ""
-        links_html += f'<a href="/?page={key}" style="font-family:\'DM Sans\',sans-serif;font-weight:500;font-size:13px;color:#452c63;text-decoration:none;padding:8px 18px;border-radius:10px;{active_style}transition:all 0.2s ease;">{label}</a>'
+        links_html += f'<a href="/?page={key}" style="font-family:\'DM Sans\',sans-serif;font-weight:500;font-size:13px;color:#ffffff;text-decoration:none;padding:8px 18px;border-radius:10px;{active_style}transition:all 0.2s ease;">{label}</a>'
 
     st.markdown(f"""
     <div style="background:rgba(255,255,255,0.82);backdrop-filter:blur(14px);border:1px solid rgba(69,44,99,0.12);
