@@ -534,27 +534,27 @@ def render_hero():
   @media (max-width: 768px) {{ nav.navbar {{ padding: 18px 22px; }} .nav-divider {{ margin: 0 22px; }} .marquee-section {{ padding: 22px 22px 30px; }} .stats {{ gap: 22px; flex-wrap: wrap; }} }}
   @media (max-width: 600px) {{ .nav-links {{ display: none; }} .stat-divider {{ display: none; }} h1.headline {{ font-size: clamp(40px, 12vw, 64px); }} }}
 
-  button.btn-secondary {
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  color: rgba(255,255,255,0.82);
-  background: rgba(255,255,255,0.06);
-  padding: 14px 28px;
-  border-radius: 12px;
-  border: 1px solid rgba(216,191,216,0.18);
-  cursor: pointer;
-  letter-spacing: 0.1px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
-}
-button.btn-secondary:hover {
-  background: rgba(255,255,255,0.10);
-  border-color: rgba(178,216,216,0.35);
-  color: #fff;
-}
+  button.btn-secondary {{
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(255,255,255,0.82);
+    background: rgba(255,255,255,0.06);
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: 1px solid rgba(216,191,216,0.18);
+    cursor: pointer;
+    letter-spacing: 0.1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }}
+  button.btn-secondary:hover {{
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(178,216,216,0.35);
+    color: #fff;
+  }}
 
 </style>
 </head>
