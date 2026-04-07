@@ -70,8 +70,8 @@ html, body, [class*="css"] {
     #0f051a 35%,        /* Hold the Dark Purple for the Hero Section (~35% of page) */
     #4b2c71 55%,        /* Transition to Medium Purple */
     #8a6fb1 75%,        /* Lighten the Purple */
-    #4db6ac 90%,        /* Transition to Teal */
-    #b2dfdb 100%        /* End with a soft, light Teal */
+    /* #4db6ac 90%, */       /* Transition to Teal */
+   /* #b2dfdb 100% */       /* End with a soft, light Teal */
   ) !important;
   
   background-attachment: fixed; /* Keeps the gradient from stretching if the page is long */
