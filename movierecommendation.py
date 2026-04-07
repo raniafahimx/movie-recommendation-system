@@ -582,12 +582,7 @@ def render_hero():
         </div>
         <h1 class="headline">Discover<br><span class="headline-accent">Cinema</span></h1>
         <p class="subtitle">Powered by User-CF, Item-CF &amp; SVD Matrix Factorization — intelligent film recommendations built on real viewing patterns.</p>
-        <div class="cta-row">
-            <button class="btn-secondary" onclick="window.parent.location.href='/?page=overview'">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
-              How It Works
-            </button>
-        </div>
+        
         <div class="stats">
           <div class="stat"><div class="stat-value">9,742</div><div class="stat-label">Movies</div></div>
           <div class="stat-divider"></div>
@@ -1703,7 +1698,10 @@ def page_home(movies, ratings, tags, links, matrix, user_ids, movie_ids,
               demo_user, n_neighbors, n_recs, svd_factors, eval_k, eval_thresh, eval_users):
     render_hero()
     st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
-
+    if st.button("▶  How It Works", key="hero_btn"):
+        st.query_params["page"] = "overview"
+        st.rerun()
+    
     tabs = st.tabs([
         "  • Overview  ",
         "  • User-Based CF  ",
