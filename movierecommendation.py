@@ -845,9 +845,9 @@ def page_overview(movies, ratings, tags, links, matrix, user_ids, movie_ids):
     # What it does
     c1, c2, c3 = st.columns(3)
     cards = [
-        ("🎯", "Problem Solved", "Overwhelm at the streaming menu. CineAI narrows 9,742 films to a precise shortlist tailored to each viewer's taste profile, reducing decision fatigue and boosting discovery."),
-        ("⚙️", "How It Works", "User and item interactions are encoded in a sparse rating matrix. Three algorithms — User-CF, Item-CF, and SVD — each exploit a different facet of that matrix to generate ranked recommendation lists."),
-        ("📐", "How We Measure", "Recommendations are validated offline using Precision@K and Recall@K on an 80/20 temporal hold-out split, ensuring the system is graded on real future preferences rather than past seen items."),
+        ("❶", "Problem Solved", "Overwhelm at the streaming menu. CineAI narrows 9,742 films to a precise shortlist tailored to each viewer's taste profile, reducing decision fatigue and boosting discovery."),
+        ("❷", "How It Works", "User and item interactions are encoded in a sparse rating matrix. Three algorithms — User-CF, Item-CF, and SVD — each exploit a different facet of that matrix to generate ranked recommendation lists."),
+        ("❸", "How We Measure", "Recommendations are validated offline using Precision@K and Recall@K on an 80/20 temporal hold-out split, ensuring the system is graded on real future preferences rather than past seen items."),
     ]
     for col, (icon, title, body) in zip([c1, c2, c3], cards):
         col.markdown(f"""
@@ -1218,8 +1218,8 @@ def page_models(movies, ratings, matrix, user_ids, movie_ids,
         "Core Idea": ["Similarity between users", "Similarity between items", "Latent factor decomposition"],
         "Complexity": ["O(U²·I)", "O(I²·U)", "O(U·I·k)"],
         "Best For": ["Sparse user data", "Stable item catalogue", "Dense matrices, global patterns"],
-        "Cold Start": ["❌ Users", "❌ Items", "❌ Both"],
-        "Interpretable": ["✅ High", "✅ High", "⚠️ Moderate"],
+        "Cold Start": ["✗ • Users", "✗ • Items", "✗ • Both"],
+        "Interpretable": ["✓ • High", "✓ • High", "☃ • Moderate"],
     })
     st.dataframe(comp, use_container_width=True, hide_index=True)
 
@@ -1642,12 +1642,12 @@ def page_home(movies, ratings, tags, links, matrix, user_ids, movie_ids,
     st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
 
     tabs = st.tabs([
-        "  Overview  ",
-        "  User-Based CF  ",
-        "  Item-Based CF  ",
-        "  SVD Factorization  ",
-        "  Explore Dataset  ",
-        "  Evaluation  ",
+        "  • Overview  ",
+        "  • User-Based CF  ",
+        "  • Item-Based CF  ",
+        "  • SVD Factorization  ",
+        "  • Explore Dataset  ",
+        "  • Evaluation  ",
     ])
 
     # TAB 0 — OVERVIEW
@@ -1975,9 +1975,9 @@ def main():
         st.markdown("""<div style="padding:0 16px;font-family:'DM Sans',sans-serif;font-size:10px;
                        letter-spacing:1px;text-transform:uppercase;color:rgba(216,191,216,0.45);
                        margin-bottom:12px;">Navigate</div>""", unsafe_allow_html=True)
-        nav_pages = [("🏠 Home", "/"), ("📊 Overview", "/?page=overview"),
-                     ("⚙️ Models", "/?page=models"), ("📈 Evaluation", "/?page=evaluation"),
-                     ("🎬 Dataset", "/?page=dataset")]
+        nav_pages = [("Home ➩", "/"), ("Overview ➩", "/?page=overview"),
+                     ("Models ➩", "/?page=models"), ("Evaluation ➩", "/?page=evaluation"),
+                     ("Dataset ➩", "/?page=dataset")]
         for label, url in nav_pages:
             st.markdown(f'<a href="{url}" style="display:block;font-family:\'DM Sans\',sans-serif;'
                         f'font-size:13px;color:rgba(216,191,216,0.75);text-decoration:none;'
