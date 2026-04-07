@@ -533,6 +533,29 @@ def render_hero():
 
   @media (max-width: 768px) {{ nav.navbar {{ padding: 18px 22px; }} .nav-divider {{ margin: 0 22px; }} .marquee-section {{ padding: 22px 22px 30px; }} .stats {{ gap: 22px; flex-wrap: wrap; }} }}
   @media (max-width: 600px) {{ .nav-links {{ display: none; }} .stat-divider {{ display: none; }} h1.headline {{ font-size: clamp(40px, 12vw, 64px); }} }}
+
+  button.btn-secondary {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(255,255,255,0.82);
+  background: rgba(255,255,255,0.06);
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: 1px solid rgba(216,191,216,0.18);
+  cursor: pointer;
+  letter-spacing: 0.1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+button.btn-secondary:hover {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(178,216,216,0.35);
+  color: #fff;
+}
+
 </style>
 </head>
 <body>
@@ -560,10 +583,10 @@ def render_hero():
         <h1 class="headline">Discover<br><span class="headline-accent">Cinema</span></h1>
         <p class="subtitle">Powered by User-CF, Item-CF &amp; SVD Matrix Factorization — intelligent film recommendations built on real viewing patterns.</p>
         <div class="cta-row">
-          <a class="btn-secondary" href="/?page=overview" target="_parent">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
-            How It Works
-          </a>
+            <button class="btn-secondary" onclick="window.parent.location.href='/?page=overview'">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+              How It Works
+            </button>
         </div>
         <div class="stats">
           <div class="stat"><div class="stat-value">9,742</div><div class="stat-label">Movies</div></div>
