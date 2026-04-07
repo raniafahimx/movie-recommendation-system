@@ -64,13 +64,15 @@ html, body, [class*="css"] {
 }
 
 .stApp {
-  background:
-    radial-gradient(ellipse at 0% 0%, rgba(69,44,99,0.28) 0%, transparent 25%),
-    radial-gradient(ellipse at 100% 0%, rgba(51,0,111,0.22) 0%, transparent 20%),
-    radial-gradient(ellipse at 50% 100%, rgba(0,102,102,0.20) 0%, transparent 75%),
-    radial-gradient(ellipse at 100% 100%, rgba(0,76,76,0.18) 0%, transparent 45%),
-    linear-gradient(160deg, #f5f2fb 0%, #f8f7fc 35%, #f0f5f5 70%, #f2f0f8 100%) !important;
+  background: 
+    /* Deep Purple Spotlight (Top Left) */
+    radial-gradient(ellipse at 0% 0%, rgba(106, 13, 173, 0.6) 0%, transparent 50%),
+    /* Navy/Indigo Spotlight (Top Right) */
+    radial-gradient(ellipse at 100% 0%, rgba(48, 0, 105, 0.5) 0%, transparent 40%),
+    /* Dark Base Gradient (The overall canvas) */
+    linear-gradient(160deg, #1a0b2e 0%, #0f051a 100%) !important;
   min-height: 100vh;
+  color: white; /* You'll likely need white text now! */
 }
 
 .stApp::before, .stApp::after { display: none !important; }
