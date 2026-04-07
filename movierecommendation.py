@@ -76,7 +76,7 @@ html, body, [class*="css"] {
 
     radial-gradient(ellipse at 100% 100%, rgba(0,76,76,0.18) 0%, transparent 45%),
 
-    linear-gradient(160deg, #C3B1E1 0%, #f8f7fc 35%, #f0f5f5 70%, #f2f0f8 100%) !important;
+    linear-gradient(180deg, #C3B1E1 0%, #f8f7fc 35%, #f0f5f5 70%, #f2f0f8 100%) !important;
 
   min-height: 100vh;
 
