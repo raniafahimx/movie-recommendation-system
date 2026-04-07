@@ -1135,7 +1135,7 @@ def page_models(movies, ratings, matrix, user_ids, movie_ids,
         with col_l:
             st.markdown("""
             **Algorithm Steps**
-            1. Transpose the rating matrix → items × users
+            1. Transpose the rating matrix : items × users
             2. Compute pairwise cosine similarity between all item vectors
             3. For target user u, find all movies they've already rated
             4. For each unseen movie m, score = Σ(sim(m,r) × rating(r)) / Σ sim(m,r)
@@ -1984,9 +1984,9 @@ def main():
         st.markdown("""<div style="padding:0 16px;font-family:'DM Sans',sans-serif;font-size:10px;
                        letter-spacing:1px;text-transform:uppercase;color:rgba(216,191,216,0.45);
                        margin-bottom:12px;">Navigate</div>""", unsafe_allow_html=True)
-        nav_pages = [("Home ➩", "/"), ("Overview ➩", "/?page=overview"),
-                     ("Models ➩", "/?page=models"), ("Evaluation ➩", "/?page=evaluation"),
-                     ("Dataset ➩", "/?page=dataset")]
+        nav_pages = [("Home ➥", "/"), ("Overview ➥", "/?page=overview"),
+                     ("Models ➥", "/?page=models"), ("Evaluation ➥", "/?page=evaluation"),
+                     ("Dataset ➥", "/?page=dataset")]
         for label, url in nav_pages:
             st.markdown(f'<a href="{url}" style="display:block;font-family:\'DM Sans\',sans-serif;'
                         f'font-size:13px;color:rgba(255,255,255,0.90);text-decoration:none;'
