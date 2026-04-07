@@ -673,13 +673,6 @@ def render_hero():
 </html>"""
     components.html(hero_html, height=820, scrolling=False)
 
-    st.markdown('<div class="hero-btn-container">', unsafe_allow_html=True)
-    if st.button("▶  How It Works", key="hero_btn"):
-        st.query_params["page"] = "overview"
-        st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-        
-
 # ══════════════════════════════════════════════════════════════
 # SHARED NAV BAR (for sub-pages)
 # ══════════════════════════════════════════════════════════════
