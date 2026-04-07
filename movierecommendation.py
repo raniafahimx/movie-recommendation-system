@@ -411,6 +411,37 @@ hr { border-color: var(--border-light) !important; opacity: 0.5; }
 @media (max-width: 900px) {
   .main .block-container { padding-left: 1rem !important; padding-right: 1rem !important; }
 }
+
+
+.stTabs [data-baseweb="tab-highlight"] {
+  background-color: var(--teal-mid) !important;
+}
+.stTabs [data-baseweb="tab-border"] {
+  background-color: transparent !important;
+}
+
+.stTextInput > div > div > input:focus {
+  border-color: var(--teal-mid) !important;
+  box-shadow: 0 0 0 3px rgba(0,102,102,0.10) !important;
+  outline: none !important;
+}
+
+/* This targets the wrapper div that Streamlit adds the red ring to */
+.stTextInput > div[data-focused="true"] {
+  border-color: var(--teal-mid) !important;
+  box-shadow: 0 0 0 3px rgba(0,102,102,0.10) !important;
+}
+
+/* Nuclear option — kills ALL red focus rings */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+[data-baseweb="input"]:focus-within {
+  border-color: var(--teal-mid) !important;
+  box-shadow: 0 0 0 3px rgba(0,102,102,0.10) !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
