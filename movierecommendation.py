@@ -63,18 +63,26 @@ html, body, [class*="css"] {
   color: var(--text-1) !important;
 }
 
+
 .stApp {
-  background: linear-gradient(
-    180deg, 
-    #0f051a 0%,         /* Darkest Purple at the very top */
-    #0f051a 35%,        /* Hold the Dark Purple for the Hero Section (~35% of page) */
-    #C3B1E1 55%,        /* Transition to Medium Purple */
-    #D8BFD8 75%        /* Lighten the Purple */
-  ) !important;
-  
-  background-attachment: local; /* Keeps the gradient from stretching if the page is long */
+
+  background:
+
+    radial-gradient(ellipse at 0% 0%, rgba(69,44,99,0.28) 0%, transparent 25%),
+
+    radial-gradient(ellipse at 100% 0%, rgba(51,0,111,0.22) 0%, transparent 20%),
+
+    radial-gradient(ellipse at 50% 100%, rgba(0,102,102,0.20) 0%, transparent 75%),
+
+    radial-gradient(ellipse at 100% 100%, rgba(0,76,76,0.18) 0%, transparent 45%),
+
+    linear-gradient(160deg, #f5f2fb 0%, #f8f7fc 35%, #f0f5f5 70%, #f2f0f8 100%) !important;
+
   min-height: 100vh;
+
 }
+
+
 .stApp::before, .stApp::after { display: none !important; }
 
 .main .block-container {
