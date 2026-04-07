@@ -65,18 +65,19 @@ html, body, [class*="css"] {
 
 .stApp {
   background: 
-    /* Medium Purple Glow (Top Left) */
-    radial-gradient(ellipse at 0% 0%, rgba(75, 0, 130, 0.7) 0%, transparent 45%),
+    /* Layer 1: Dark Purple Spotlight at the very top */
+    radial-gradient(ellipse at 50% 0%, rgba(31, 12, 61, 0.9) 0%, transparent 70%),
     
-    /* Soft Teal Glow (Bottom Right) */
-    radial-gradient(ellipse at 100% 100%, rgba(0, 150, 150, 0.35) 0%, transparent 45%),
-    
-    /* The "Medium" Base - Not white, but a soft tinted grey-purple */
-    linear-gradient(160deg, #e9e4f0 0%, #d9e7e7 100%) !important;
-  
+    /* Layer 2: The Main Vertical Transition */
+    linear-gradient(180deg, 
+        #2a1b41 0%,    /* Exact beginning: Dark Purple */
+        #7a5ba0 40%,   /* Transition: Medium/Light Purple */
+        #82c9c9 85%,   /* Transition: Soft Teal */
+        #e0f2f2 100%   /* Bottom: Very Light Teal/White */
+    ) !important;
+
   min-height: 100vh;
 }
-
 .stApp::before, .stApp::after { display: none !important; }
 
 .main .block-container {
