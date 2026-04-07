@@ -64,18 +64,17 @@ html, body, [class*="css"] {
 }
 
 .stApp {
-  background: 
-    /* Layer 1: Dark Purple Spotlight at the very top */
-    radial-gradient(ellipse at 50% 0%, rgba(31, 12, 61, 0.9) 0%, transparent 70%),
-    
-    /* Layer 2: The Main Vertical Transition */
-    linear-gradient(180deg, 
-        #2a1b41 0%,    /* Exact beginning: Dark Purple */
-        #7a5ba0 40%,   /* Transition: Medium/Light Purple */
-        #82c9c9 85%,   /* Transition: Soft Teal */
-        #e0f2f2 100%   /* Bottom: Very Light Teal/White */
-    ) !important;
-
+  background: linear-gradient(
+    180deg, 
+    #0f051a 0%,         /* Darkest Purple at the very top */
+    #0f051a 35%,        /* Hold the Dark Purple for the Hero Section (~35% of page) */
+    #4b2c71 55%,        /* Transition to Medium Purple */
+    #8a6fb1 75%,        /* Lighten the Purple */
+    #4db6ac 90%,        /* Transition to Teal */
+    #b2dfdb 100%        /* End with a soft, light Teal */
+  ) !important;
+  
+  background-attachment: fixed; /* Keeps the gradient from stretching if the page is long */
   min-height: 100vh;
 }
 .stApp::before, .stApp::after { display: none !important; }
