@@ -442,6 +442,31 @@ hr { border-color: var(--border-light) !important; opacity: 0.5; }
   box-shadow: 0 0 0 3px rgba(0,102,102,0.10) !important;
 }
 
+.hero-btn-container {
+    position: relative;
+    margin-top: -500px;
+    margin-bottom: 400px;
+    display: flex;
+    justify-content: center;
+    z-index: 9999;
+}
+.hero-btn-container > div[data-testid="stButton"] > button {
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(216,191,216,0.18) !important;
+    color: rgba(255,255,255,0.82) !important;
+    width: auto !important;
+    padding: 14px 28px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    border-radius: 12px !important;
+    backdrop-filter: blur(10px) !important;
+}
+.hero-btn-container > div[data-testid="stButton"] > button:hover {
+    background: rgba(255,255,255,0.10) !important;
+    border-color: rgba(178,216,216,0.35) !important;
+    color: #fff !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -465,7 +490,7 @@ header[data-testid="stHeader"] { background: transparent !important; backdrop-fi
 
 def render_hero():
     st.markdown(_HERO_SHIM_CSS, unsafe_allow_html=True)
-
+    
 
     hero_html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -648,6 +673,12 @@ def render_hero():
 </html>"""
     components.html(hero_html, height=820, scrolling=False)
 
+    st.markdown('<div class="hero-btn-container">', unsafe_allow_html=True)
+    if st.button("▶  How It Works", key="hero_btn"):
+        st.query_params["page"] = "overview"
+        st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
+        
 
 # ══════════════════════════════════════════════════════════════
 # SHARED NAV BAR (for sub-pages)
@@ -1698,9 +1729,6 @@ def page_home(movies, ratings, tags, links, matrix, user_ids, movie_ids,
               demo_user, n_neighbors, n_recs, svd_factors, eval_k, eval_thresh, eval_users):
     render_hero()
     st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
-    if st.button("▶  How It Works", key="hero_btn"):
-        st.query_params["page"] = "overview"
-        st.rerun()
     
     tabs = st.tabs([
         "  • Overview  ",
